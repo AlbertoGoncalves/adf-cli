@@ -15,7 +15,7 @@ class ProductRepository {
 
     final responseData = jsonDecode(response.body);
 
-    if (responseData.isEmpty) {
+    if (responseData.isEmpty || responseData == '{}') {
       throw Exception('Produto não cadastrado');
     }
 

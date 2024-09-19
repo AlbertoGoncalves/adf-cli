@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'address.dart';
 import 'course.dart';
@@ -9,51 +10,47 @@ class Student {
   final List<String> nameCourses;
   final List<Course> courses;
   final Address address;
-  
-    Student({
-    required this.name,
-    required this.nameCourses,
-    required this.courses,
-    required this.address,
-    this.id,
-    this.age
-  });
 
-    //desserialização de Json para Objeto
-    factory Student.fromMap(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        "id": final id,
-        "name": final name,
-        "age": final age,
-        "nameCourses": final nameCourses,
-        "courses": final List<Course> courses,
-        "address": final address,
+  Student(
+      {required this.name,
+      required this.nameCourses,
+      required this.courses,
+      required this.address,
+      this.id,
+      this.age});
 
-      } =>
-        Student(
-          id: id.trim() ?? 0,
-          name: name.trim() ?? "",
-          age: age.trim() ?? 0,
-          nameCourses: List<String>.from(nameCourses ?? <String>[]),
-          courses: courses.map<Course>((e) => Course.fromMap(e as Map<String, dynamic>)).toList() ?? <Course>[],
-          address: Address.fromMap(address ?? <String, dynamic>{}),
-          
-        ),
-      _ => throw ArgumentError('Invalid Json'),
+//Serialização de Objeto para Json
+  Map<String, dynamic> toMap() {
+    final map = <String, dynamic>{
+      "id": id,
+      "name": name,
+      "age": age,
+      "nameCourses": nameCourses,
+      "courses": courses.map((e) => e.toMap()).toList(),
+      "address": address.toMap(),
     };
+
+    if (age != null) {
+      map['age'] = age;
+    }
+
+    return map;
   }
 
-//Serialização de Objeto para Json 
-  Map<String, dynamic> toJson() {
-    return {
-        "id": id,
-        "name": name,
-        "age": age,
-        "nameCourses": nameCourses,
-        "courses": courses.map((e) => e.toJson()).toList(),
-        "address": address.toJson(),
+  String toJson() => jsonEncode(toMap());
 
-    };
+  //desserialização de Json para Objeto
+  factory Student.fromMap(Map<String, dynamic> map) {
+    return Student(
+      id: map['id'] ?? 0,
+      name: map['name'] ?? "",
+      age: map['age'] ?? 0,
+      nameCourses: List<String>.from(map['nameCourses'] ?? <String>[]),
+      address: Address.fromMap(map['address'] ?? <String, dynamic>{}),
+      courses: map['courses'].map<Course>((e) => Course.fromMap(e)).toList() ??
+          <Course>[],
+    );
   }
+
+  factory Student.fromJson(String json) => Student.fromMap(jsonDecode(json));
 }
