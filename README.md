@@ -6,6 +6,8 @@
 
 * 0.0.1
     * Criação de Repositorio
+* 1.0.0
+    * Projeto funcional de crude interface de linha de comando (CLI)  
 
 ## Histórico de branch
 
