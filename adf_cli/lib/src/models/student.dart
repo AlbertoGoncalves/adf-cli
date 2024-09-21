@@ -24,7 +24,6 @@ class Student {
     final map = <String, dynamic>{
       "id": id,
       "name": name,
-      "age": age,
       "nameCourses": nameCourses,
       "courses": courses.map((e) => e.toMap()).toList(),
       "address": address.toMap(),
@@ -44,10 +43,10 @@ class Student {
     return Student(
       id: map['id'] ?? 0,
       name: map['name'] ?? "",
-      age: map['age'] ?? 0,
+      age: map['age'],
       nameCourses: List<String>.from(map['nameCourses'] ?? <String>[]),
       address: Address.fromMap(map['address'] ?? <String, dynamic>{}),
-      courses: map['courses'].map<Course>((e) => Course.fromMap(e)).toList() ??
+      courses: map['courses']?.map<Course>((e) => Course.fromMap(e)).toList() ??
           <Course>[],
     );
   }

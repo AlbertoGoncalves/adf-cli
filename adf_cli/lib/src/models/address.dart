@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'city.dart';
 import 'phone.dart';
 
@@ -15,33 +17,32 @@ class Address {
       required this.phone,
       this.number});
 
-  factory Address.fromMap(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        "street": final street,
-        "number": final number,
-        "zipCode": final zipCode,
-        "city": final city,
-        "phone": final phone,
-      } =>
-        Address(
-          street: street.trim() ?? 0,
-          number: number.trim() ?? 0,
-          zipCode: zipCode.trim() ?? 0,
-          city: city.fromMap(city ?? <String, dynamic>{}),
-          phone: phone.fromMap(phone ?? <String, dynamic>{}),
-        ),
-      _ => throw ArgumentError('Invalid Json'),
-    };
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
+//Serialização de Objeto para Json
+  Map<String, dynamic> toMap() {
+    final map = <String, dynamic>{
       "street": street,
       "number": number,
       "zipCode": zipCode,
-      "city": city.toJson(),
-      "phone": phone.toJson(),
+      "city": city.toMap(),
+      "phone": phone.toMap(),
     };
+    return map;
   }
+
+  String toJson() => jsonEncode(toMap());
+
+//desserialização de Json para Objeto
+  factory Address.fromMap(Map<String, dynamic> map) {
+    return Address(
+          street: map['street'] ?? '',
+          number: map['number'] ?? 0,
+          zipCode: map['zipCode'] ?? '',
+          city: City.fromMap(map['city'] ?? <String, dynamic>{}),
+          phone: Phone.fromMap(map['phone'] ?? <String, dynamic>{}),
+    );
+  }
+
+  factory Address.fromJson(String json) => Address.fromMap(jsonDecode(json));
+
+
 }

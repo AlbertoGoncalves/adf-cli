@@ -1,37 +1,32 @@
-import 'dart:ffi';
+import 'dart:convert';
 
 class Course {
   final int id;
   final String name;
-  final Bool isStudent;
+  bool isStudent;
 
-    Course({
-    required this.name,
-    required this.isStudent,
-    required this.id
-  });
+  Course({required this.name, required this.isStudent, required this.id});
 
-    factory Course.fromMap(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        "id": final id,
-        "name": final name,
-        "isStudent": final isStudent,
-      } =>
-        Course(
-          id: id.trim() ?? 0,
-          name: name.trim() ?? 0,
-          isStudent: isStudent.trim() ?? false,
-        ),
-      _ => throw ArgumentError('Invalid Json'),
-    };
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
+//Serialização de Objeto para Json
+  Map<String, dynamic> toMap() {
+    final map = <String, dynamic>{
       "id": id,
       "name": name,
       "isStudent": isStudent,
     };
+    return map;
   }
+
+  String toJson() => jsonEncode(toMap());
+
+//desserialização de Json para Objeto
+  factory Course.fromMap(Map<String, dynamic> map) {
+    return Course(
+      id: map['id'] ?? 0,
+      name: map['name'] ?? "",
+      isStudent: map['isStudent'] ?? false,
+    );
+  }
+
+  factory Course.fromJson(String json) => Course.fromMap(jsonDecode(json));
 }

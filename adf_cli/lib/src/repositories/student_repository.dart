@@ -10,20 +10,15 @@ class StudentRepository {
         // await http.get(Uri.parse('http://177.71.92.209:9001/students'));
         await http.get(Uri.parse('http://192.168.3.10:9001/students'));
 
-    print(studentsResult.body);    
-
     if (studentsResult.statusCode != 200) {
       throw Exception();
     }
     
     final studentsData = jsonDecode(studentsResult.body);
 
-    print(studentsData);
-
-
-    if (studentsData.isEmpty) {
-      throw Exception('Students não cadastrados');
-    }
+    // if (studentsData.isEmpty) {
+    //   throw Exception('Students não cadastrados');
+    // }
 
     return studentsData.map<Student>((e) {
       return Student.fromMap(e);
@@ -44,7 +39,7 @@ class StudentRepository {
       throw Exception('Estudante não cadastrado');
     }
 
-    return Student.fromMap(responseData.first);
+    return Student.fromMap(responseData);
   }
 
   Future<void> insert(Student student) async {
