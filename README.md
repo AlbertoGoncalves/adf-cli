@@ -7,7 +7,10 @@
 * 0.0.1
     * Criação de Repositorio
 * 1.0.0
-    * Projeto funcional de crude interface de linha de comando (CLI)  
+    * Projeto funcional de crude interface de linha de comando (CLI)
+* 1.1.0
+    * Projeto funcional de crude interface de linha de comando (CLI)
+    * refactor: Altera dependencie de HTTP para dio  
 
 ## Histórico de branch
 
