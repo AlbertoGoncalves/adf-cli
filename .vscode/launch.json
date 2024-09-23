@@ -1,0 +1,63 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Student Find By Id",
+            "cwd": "adf_cli",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/adf_cli/bin/adf_cli.dart",
+            "args": [
+                "students",
+                "byId",
+                "-i",
+                "${input:id_student}"
+            ]
+        },
+        {
+            "name": "Student Insert",
+            "cwd": "adf_cli",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/adf_cli/bin/adf_cli.dart",
+            "args": [
+                "students",
+                "insert",
+                "-f",
+                "${input:file_path}"
+            ]
+        },
+        {
+            "name": "Student Update By Id",
+            "cwd": "adf_cli",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/adf_cli/bin/adf_cli.dart",
+            "args": [
+                "students",
+                "update",
+                "-f",
+                "${input:file_path}",
+                "-i",
+                "${input:id_student}"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "id_student",
+            "description": "Informe o ID do aluno",
+            "default": "",
+            "type": "promptString"
+        },
+        {
+            "id": "file_path",
+            "description": "Informe o caminho do arquivo",
+            "default": "",
+            "type": "promptString"
+        }
+    ]
+}
