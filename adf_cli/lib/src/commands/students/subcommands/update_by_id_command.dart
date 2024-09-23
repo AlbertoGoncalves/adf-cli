@@ -6,12 +6,12 @@ import '../../../models/address.dart';
 import '../../../models/city.dart';
 import '../../../models/phone.dart';
 import '../../../models/student.dart';
-import '../../../repositories/product_repository.dart';
-import '../../../repositories/student_repository.dart';
+import '../../../repositories/product_dio_repository.dart';
+import '../../../repositories/student_dio_repository.dart';
 
 class UpdateByIdCommand extends Command {
-  StudentRepository studentRepository;
-  final ProductRepository productRepository;
+  StudentDioRepository studentRepository;
+  final ProductDioRepository productRepository;
 
   @override
   String get description => 'Update Student';
@@ -20,7 +20,7 @@ class UpdateByIdCommand extends Command {
   String get name => 'update';
 
   UpdateByIdCommand(this.studentRepository)
-      : productRepository = ProductRepository() {
+      : productRepository = ProductDioRepository() {
     argParser.addOption('file', help: 'Path of the csv file', abbr: 'f');
     argParser.addOption('id', help: 'Student id', abbr: 'i');
   }
